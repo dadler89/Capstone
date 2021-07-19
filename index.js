@@ -37,35 +37,35 @@ render(state.Home);
 
 
 
-  function addNavEventListeners() {
-    // add menu toggle to bars icon in nav bar
-    document
-      .querySelector(".fa-hockey-puck")
-      .addEventListener("click", () =>
-        document.querySelector("nav > ul").classList.toggle("hidden--mobile")
-      );
-  }
-
-function addEventListener(view = {}){
-
-  if(view === state.Home){
-  document.getElementById('submitButton')
-  .addEventListener("click", () => getData());
-    }
+function addNavEventListeners() {
+  // add menu toggle to bars icon in nav bar
+  document
+    .querySelector(".fa-hockey-puck")
+    .addEventListener("click", () =>
+      document.querySelector("nav > ul").classList.toggle("hidden--mobile")
+    );
 }
 
-function addScoreEventListener(view = {}){
-  if(view === state.Home){
-  document.getElementById('submitButton')
-  .addEventListener("click", () => getScore());
-    }
+function addEventListener(view = {}) {
+
+  if (view === state.Home) {
+    document.getElementById('submitButton')
+      .addEventListener("click", () => getData());
+  }
+}
+
+function addScoreEventListener(view = {}) {
+  if (view === state.Home) {
+    document.getElementById('submitButton')
+      .addEventListener("click", () => getScore());
+  }
 };
 
 
 
 
 
-function getData(){
+function getData() {
 
 
   const selectedHomeTeam = document.getElementById('chooseHome').value;
@@ -77,32 +77,32 @@ function getData(){
   const selectedSeason = document.getElementById('chooseSeason').value;
   // console.log(selectedSeason);
 
-    axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/${selectedSeason}/games/${selectedDate}-${selectedHomeTeam}-${selectedAwayTeam}/lineup.json`,
-      {
-        headers: {
-          Authorization: `Basic ${process.env.MSFAPI}`
-          },
-        params: {
-          position: 'Goalie-Starter'
-          }
+  axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/${selectedSeason}/games/${selectedDate}-${selectedHomeTeam}-${selectedAwayTeam}/lineup.json`,
+    {
+      headers: {
+        Authorization: `Basic ${process.env.MSFAPI}`
+      },
+      params: {
+        position: 'Goalie-Starter'
       }
-      )
-      .then(response => {
-        // console.log(response.data)
-        /// hide the error if request is valid
-        const gameData = response.data;
-        const homeGoalie = gameData.teamLineups[0].actual.lineupPositions[0].player;
-        const homeGoalieRef = gameData.references.playerReferences[0]
-        const awayGoalieRef= gameData.references.playerReferences[1]
-        const awayGoalie = gameData.teamLineups[1].actual.lineupPositions[0].player;
-        const homeTeamElement = document.getElementById('homeTeam');
-        // console.log(homeTeamElement);
-        const awayTeamElement = document.getElementById('awayTeam');
-        const cardHome = document.createElement("div");
-        const cardAway = document.createElement("div");
-        homeTeamElement.innerHTML = '';
-        awayTeamElement.innerHTML = '';
-        cardHome.innerHTML = `
+    }
+  )
+    .then(response => {
+      // console.log(response.data)
+      /// hide the error if request is valid
+      const gameData = response.data;
+      const homeGoalie = gameData.teamLineups[0].actual.lineupPositions[0].player;
+      const homeGoalieRef = gameData.references.playerReferences[0]
+      const awayGoalieRef = gameData.references.playerReferences[1]
+      const awayGoalie = gameData.teamLineups[1].actual.lineupPositions[0].player;
+      const homeTeamElement = document.getElementById('homeTeam');
+      // console.log(homeTeamElement);
+      const awayTeamElement = document.getElementById('awayTeam');
+      const cardHome = document.createElement("div");
+      const cardAway = document.createElement("div");
+      homeTeamElement.innerHTML = '';
+      awayTeamElement.innerHTML = '';
+      cardHome.innerHTML = `
         <h2>Starting Home Goalie : ${homeGoalie.firstName} ${homeGoalie.lastName} </h2>
         <img
         src="${homeGoalieRef.officialImageSrc.split("https").join("http")}"
@@ -120,9 +120,9 @@ function getData(){
         <h3> Jersey Number : ${homeGoalieRef.jerseyNumber} </h3>
 
       `;
-        homeTeamElement.appendChild(cardHome);
+      homeTeamElement.appendChild(cardHome);
 
-        cardAway.innerHTML = `<div>
+      cardAway.innerHTML = `<div>
         <h2>Starting Away Goalie : ${awayGoalie.firstName} ${awayGoalie.lastName} </h2>
         <img
         src="${awayGoalieRef.officialImageSrc.split("https").join("http")}"
@@ -140,15 +140,15 @@ function getData(){
         <h3> Jersey Number : ${awayGoalieRef.jerseyNumber} </h3>
 
         </div>`;
-        awayTeamElement.appendChild(cardAway);
-    }).catch(err =>{
+      awayTeamElement.appendChild(cardAway);
+    }).catch(err => {
       console.log(err);
     })
 
-  }
+}
 
 
-function getScore (){
+function getScore() {
   const selectedHomeTeam = document.getElementById('chooseHome').value;
   // console.log(selectedHomeTeam);
   const selectedAwayTeam = document.getElementById('chooseAway').value;
@@ -159,28 +159,28 @@ function getScore (){
   // console.log(selectedSeason);
 
   axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/${selectedSeason}/games/${selectedDate}-${selectedHomeTeam}-${selectedAwayTeam}/boxscore.json`,
-  {
-    headers: {
-      Authorization: `Basic ${process.env.MSFAPI}`
+    {
+      headers: {
+        Authorization: `Basic ${process.env.MSFAPI}`
       }
     })
-      .then(response => {
-        // console.log(response.data)
-        /// hide the error if request is valid
-        const scoreData = response.data;
-        const homeScore = scoreData.scoring;
-        const awayScore = scoreData.scoring;
-        const homeStats = scoreData.stats.home
-        const awayStats = scoreData.stats.away
-        // console.log(homeScore, awayScore)
-        const homeScoreElement = document.getElementById('sidebar');
-        // console.log(homeScoreElement);
-        const awayScoreElement = document.getElementById('sidebar');
-        const scoreCardHome = document.createElement("div");
-        const scoreCardAway = document.createElement("div");
-        homeScoreElement.innerHTML = '';
-        awayScoreElement.innerHTML = '';
-        scoreCardHome.innerHTML = `
+    .then(response => {
+      // console.log(response.data)
+      /// hide the error if request is valid
+      const scoreData = response.data;
+      const homeScore = scoreData.scoring;
+      const awayScore = scoreData.scoring;
+      const homeStats = scoreData.stats.home
+      const awayStats = scoreData.stats.away
+      // console.log(homeScore, awayScore)
+      const homeScoreElement = document.getElementById('sidebar');
+      // console.log(homeScoreElement);
+      const awayScoreElement = document.getElementById('sidebar');
+      const scoreCardHome = document.createElement("div");
+      const scoreCardAway = document.createElement("div");
+      homeScoreElement.innerHTML = '';
+      awayScoreElement.innerHTML = '';
+      scoreCardHome.innerHTML = `
         <h2> Home Stats </h2>
         <h3> Goals : ${homeScore.homeScoreTotal}</h3>
         <h3> Shots : ${homeStats.teamStats[0].miscellaneous.shots} </h3>
@@ -192,9 +192,9 @@ function getScore (){
 
 
             `;
-        homeScoreElement.appendChild(scoreCardHome);
+      homeScoreElement.appendChild(scoreCardHome);
 
-        scoreCardAway.innerHTML = `
+      scoreCardAway.innerHTML = `
         <h2> Away Stats </h2>
         <h3> Goals : ${awayScore.homeScoreTotal}</h3>
         <h3> Shots : ${awayStats.teamStats[0].miscellaneous.shots} </h3>
@@ -205,21 +205,21 @@ function getScore (){
         <h3> PP Percent : ${awayStats.teamStats[0].powerplay.powerplayPercent} </h3>
 
             `;
-        awayScoreElement.appendChild(scoreCardAway);
+      awayScoreElement.appendChild(scoreCardAway);
 
-      })
-      }
-
-
+    })
+}
 
 
 
-      function addPlayerEventListener(view = {}){
-        if(view === state.Lineup && document.readyState === "complete"){
-        document.getElementById('lineupButton')
-        .addEventListener("click", () => getPlayerStats());
-        }
-      }
+
+
+function addPlayerEventListener(view = {}) {
+  if (view === state.Lineup && document.readyState === "complete") {
+    document.getElementById('lineupButton')
+      .addEventListener("click", () => getPlayerStats());
+  }
+}
 
 
 
@@ -229,26 +229,26 @@ function getPlayerStats() {
   const selectedPlayer = document.getElementById('choosePlayer').value;
   console.log(selectedPlayer);
   axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json`,
-  {
-    headers: {
-      Authorization: `Basic ${process.env.MSFAPI}`
+    {
+      headers: {
+        Authorization: `Basic ${process.env.MSFAPI}`
       },
-    params: {
-      player: `${selectedPlayer}`
+      params: {
+        player: `${selectedPlayer}`
       }
-  }
+    }
   )
-  .then(response => {
-    const statsData = response.data;
-    // console.log(statsData);
-    const playerStats = statsData.playerStatsTotals[0].stats
-    // console.log(playerStats);
-    const playerRef = statsData.references.playerReferences[0]
-    // console.log(playerRef)
-     const playerStatElement = document.getElementById('lineupCard')
-     const playerCard = document.createElement("div");
-     playerStatElement.innerHTML = '';
-     playerCard.innerHTML = `<h2> Seasonal Player Stats </h2>
+    .then(response => {
+      const statsData = response.data;
+      // console.log(statsData);
+      const playerStats = statsData.playerStatsTotals[0].stats
+      // console.log(playerStats);
+      const playerRef = statsData.references.playerReferences[0]
+      // console.log(playerRef)
+      const playerStatElement = document.getElementById('lineupCard')
+      const playerCard = document.createElement("div");
+      playerStatElement.innerHTML = '';
+      playerCard.innerHTML = `<h2> Seasonal Player Stats </h2>
      <img
         src="${playerRef.officialImageSrc.split("https").join("http")}"
         alt="Daily"
@@ -267,10 +267,10 @@ function getPlayerStats() {
      <h3> Blocks : ${playerStats.skating.blockedShots}</h3>
      <h3> PIM : ${playerStats.penalties.penaltyMinutes}</h3>
     `;
-     playerStatElement.appendChild(playerCard);
+      playerStatElement.appendChild(playerCard);
 
 
-  } )
+    })
 }
 
 ;
@@ -286,20 +286,20 @@ let yyyymmdd = y + m + d;
 function getGameScores(view = {}) {
 
   axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/${yyyymmdd}/games.json?current`,
-  {
-    headers: {
-      Authorization: `Basic ${process.env.MSFAPI}`
+    {
+      headers: {
+        Authorization: `Basic ${process.env.MSFAPI}`
       }
-  }
+    }
   )
-  .then(response => {
-    const boxScoreData = response.data;
-    // console.log(boxScoreData);
-    const homeBoxScore = boxScoreData.games.score
-    const boxScoreElement = document.getElementById('boxScoreDiv')
-    boxScoreData.games.forEach((game) => {
-      var boxScoreCard = document.createElement("div");
-      boxScoreCard.innerHTML = `
+    .then(response => {
+      const boxScoreData = response.data;
+      // console.log(boxScoreData);
+      const homeBoxScore = boxScoreData.games.score
+      const boxScoreElement = document.getElementById('boxScoreDiv')
+      boxScoreData.games.forEach((game) => {
+        var boxScoreCard = document.createElement("div");
+        boxScoreCard.innerHTML = `
   <h7> ${game.schedule.homeTeam.abbreviation}  vs ${game.schedule.awayTeam.abbreviation} </h7>
   <br>
   <h8> ${game.score.homeScoreTotal} - ${game.score.awayScoreTotal}  </h8>
@@ -308,11 +308,39 @@ function getGameScores(view = {}) {
 
 
     `
-    boxScoreElement.appendChild(boxScoreCard);
+        boxScoreElement.appendChild(boxScoreCard);
+      })
     })
-  })
 }
 getGameScores();
+
+
+
+
+
+
+
+
+// axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff/player_stats_totals_projections.json`,
+//   {
+//     headers: {
+//       Authorization: `Basic ${process.env.MSFAPI}`
+//     }
+//   }
+// )
+//   .then(response => {
+//     let projections = response.data;
+//     console.log(projections);
+//   });
+
+
+
+
+
+
+
+
+
 
 
 

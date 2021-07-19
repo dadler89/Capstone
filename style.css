@@ -241,7 +241,7 @@ a {
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 551px) {
   .nav a,
   .nav input[type="text"] {
     float: none;
@@ -254,7 +254,7 @@ a {
   .nav input[type="text"] {
     border: 1px solid #ccc;
   }
-  .hidden--mobile {
+  .fa-hockey-puck {
     display: none !important;
   }
   #sidebar {

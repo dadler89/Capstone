@@ -13,8 +13,8 @@ let db
 const con = MongoClient.connect(`${process.env.MOGOPASS}`, (err, database) => {
   if (err) return console.log(err)
   db = database.db('Hockey')
-    console.log('Connected to DataBase')
-  })
+  console.log('Connected to DataBase')
+})
 
 const msf = new MySportsFeeds("2.0", true);
 
@@ -28,26 +28,26 @@ app.use(express.json());
 app.get('/api/hockey', (req, res) => {
   db.collection('dates').find().toArray((err, result) => {
     if (err) return console.log(err)
-    res.send({info : result})
+    res.send({ info: result })
   })
 })
 
 app.get('/api/playerStats', (req, res) => {
   db.collection('playerStats').find().toArray((err, result) => {
     if (err) return console.log(err)
-    res.send({info : result})
+    res.send({ info: result })
   })
 })
 
 app.get('/api/fhfstats', (req, res) => {
   db.collection('fhfhstats').find().toArray((err, result) => {
     if (err) return console.log(err)
-    res.send({info : result})
+    res.send({ info: result })
   })
 })
- let port  = process.env.PORT;
- if(port == null || port == ""){
-   port = 8675
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8675
 }
 
 app.listen(port, () => console.log('Server has successfully started'));
