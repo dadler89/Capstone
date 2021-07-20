@@ -88,7 +88,7 @@ function getData() {
     }
   )
     .then(response => {
-      // console.log(response.data)
+      console.log(response.data)
       /// hide the error if request is valid
       const gameData = response.data;
       const homeGoalie = gameData.teamLineups[0].actual.lineupPositions[0].player;
@@ -321,17 +321,17 @@ getGameScores();
 
 
 
-// axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff/player_stats_totals_projections.json`,
-//   {
-//     headers: {
-//       Authorization: `Basic ${process.env.MSFAPI}`
-//     }
-//   }
-// )
-//   .then(response => {
-//     let projections = response.data;
-//     console.log(projections);
-//   });
+axios.get(`https://api.mysportsfeeds.com/v2.1/pull/nhl/latest/player_stats_totals_projections.json`,
+  {
+    headers: {
+      Authorization: `Basic ${process.env.MSFAPI}`
+    }
+  }
+)
+  .then(response => {
+    let projections = response.data;
+    console.log(projections);
+  });
 
 
 
