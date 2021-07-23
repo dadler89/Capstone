@@ -25,7 +25,7 @@ function render(st = state.Home) {
   router.updatePageLinks();
 
   addEventListener(st);
-  addNavEventListeners();
+  addNavEventListeners(st);
   addScoreEventListener(st);
   addPlayerEventListener(state.Lineup)
 
@@ -34,17 +34,24 @@ function render(st = state.Home) {
 
 render(state.Home);
 
+function addNavEventListeners(st) {
+  // add event listeners to Nav items for navigation
+  document.querySelectorAll("nav a").forEach(navLink =>
+    navLink.addEventListener("click", event => {
+      event.preventDefault();
+      render(state[event.target.title]);
+    })
+  );
 
-
-
-function addNavEventListeners() {
   // add menu toggle to bars icon in nav bar
   document
     .querySelector(".fa-hockey-puck")
     .addEventListener("click", () =>
       document.querySelector("nav > ul").classList.toggle("hidden--mobile")
     );
-}
+
+};
+
 
 function addEventListener(view = {}) {
 
