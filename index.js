@@ -3,7 +3,10 @@ import { capitalize } from "lodash";
 import * as state from "./store";
 import { Header, Nav, Main, Footer } from "./components";
 import axios from "axios";
-import "./env";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import "cors"
 
 const router = new Navigo(window.location.origin);
@@ -15,7 +18,7 @@ router
   })
   .resolve();
 
-function render(st = state.Home) {
+function render(st) {
   document.querySelector("#root").innerHTML = `
   ${Header(st)}
   ${Nav(state.Links)}
@@ -322,7 +325,7 @@ function getGameScores(view = {}) {
 getGameScores();
 
 
-
+// This is a test
 
 
 

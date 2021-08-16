@@ -1,5 +1,5 @@
 
-export default links => `
+export default (links) => `
   <nav class="navBar">
     <i class="fas fa-hockey-puck"></i>
     <ul class="hidden--mobile">

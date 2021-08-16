@@ -1,4 +1,4 @@
-export default () => `
+export default (st) => `
 <main>
 <section id="lineup">
 <div class="sidebarLeft"></div>
